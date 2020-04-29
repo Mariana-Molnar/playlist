@@ -19,6 +19,7 @@ class App extends React.Component {
         };
         this.handleInput = this.handleInput.bind(this);
         this.addItem = this.addItem.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
     }
     handleInput(e){
         this.setState({
@@ -43,17 +44,23 @@ class App extends React.Component {
             })
         }
     }
+    deleteItem(key){
+        const filteredItems= this.state.items.filter(item =>
+            item.key!==key);
+        this.setState({
+            items: filteredItems
+        })
+    }
     render(){
         return (
             <div className="App">
                 <header>
                     <form id="to-do-form" onSubmit={this.addItem}>
                         <input type="text" name="song" placeholder="Song" value={this.state.currentItem.name} onChange={this.handleInput}/>
-                        {/*<input type="text" name="singer" placeholder="Singer" value={this.state.currentItem.name} onChange={this.handleInput}/>*/}
                         <button type="submit">Add</button>
                     </form>
                 </header>
-                <ListItem items={this.state.items}></ListItem>
+                <ListItem items={this.state.items} deleteItem={this.deleteItem}></ListItem>
             </div>
         );
     }
